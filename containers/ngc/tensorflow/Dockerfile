@@ -1,5 +1,5 @@
 # https://ngc.nvidia.com/catalog/containers/nvidia:tensorflow
-FROM nvcr.io/nvidia/tensorflow:20.01-tf1-py3
+FROM nvcr.io/nvidia/tensorflow:20.03-tf2-py3
 
 # Install some extra packages to ease development
 RUN apt-get update && \

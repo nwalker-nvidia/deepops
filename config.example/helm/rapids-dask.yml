@@ -7,10 +7,10 @@ worker:
     # repository: nvcr.io/nvidia/rapidsai/rapidsai
     # repository: dask-rapids
     repository: supertetelman/k8s-rapids-dask
-    tag: cuda9.2-runtime-ubuntu16.04
+    tag: 0.9-cuda10.0-runtime-ubuntu18.04
     env:
   replicas: 1
-  resources: 
+  resources:
     requests:
       nvidia.com/gpu: 1
     limits:
@@ -19,15 +19,15 @@ worker:
 scheduler:
   image:
     repository: supertetelman/k8s-rapids-dask
-    tag: cuda9.2-runtime-ubuntu16.04
+    tag: 0.9-cuda10.0-runtime-ubuntu18.04
 
 # By default we should be doing all Dask works on workers using calls to distributed.Client()
 # If you would like to run/test your GPU code without using workers you may comment the resources section
 jupyter:
   image:
     repository: supertetelman/k8s-rapids-dask
-    tag: cuda9.2-runtime-ubuntu16.04
-  resources: 
+    tag: 0.9-cuda10.0-runtime-ubuntu18.04
+  resources:
     requests:
       nvidia.com/gpu: 0
     limits:

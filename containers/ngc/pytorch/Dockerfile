@@ -1,5 +1,5 @@
 # https://ngc.nvidia.com/catalog/containers/nvidia:pytorch
-FROM nvcr.io/nvidia/pytorch:20.01-py3
+FROM nvcr.io/nvidia/pytorch:20.03-py3
 
 # Install some extra packages to ease development
 RUN apt-get update && \

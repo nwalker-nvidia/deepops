@@ -2,7 +2,7 @@
 singleuser:
   image:
     name: dholt/jupyterhub-k8s-gpu
-    tag: v0.6
+    tag: latest
   extraEnv:
   - JUPYTER_ENABLE_LAB: 1
   nodeSelector:

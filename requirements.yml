@@ -1,7 +1,7 @@
 ---
 
 - src: dev-sec.ssh-hardening
-  version: "6.1.3"
+  version: "7.0.0"
 
 - src: https://github.com/DeepOps/ansible-role-users
   name: DeepOps.users
@@ -12,10 +12,10 @@
   name: DeepOps.hosts
 
 - src: geerlingguy.ntp
-  version: "1.6.3"
+  version: "2.0.0"
 
 - src: andrewrothstein.miniconda
-  version: "v5.2.6"
+  version: "v5.2.11"
 
 - src: nvidia.nvidia_driver
   version: "v1.2.0"
@@ -27,19 +27,19 @@
   verions: "v0.1.2"
 
 - src: geerlingguy.filebeat
-  version: "2.0.1"
+  version: "3.0.2"
 
 - src: geerlingguy.logstash
-  version: "4.0.0"
+  version: "5.0.3"
 
 - src: geerlingguy.elasticsearch
-  version: "3.0.1"
+  version: "4.1.1"
 
 - src: geerlingguy.java
-  version: "1.9.5"
+  version: "1.9.7"
 
 - src: geerlingguy.kibana
-  version: "3.2.1"
+  version: "4.0.1"
 
 - src: https://github.com/DeepOps/ansible-maas.git
   name: ansible-maas
@@ -52,7 +52,7 @@
   version: 'a56783750d5e61f0d099a2b294d9f050d194f293'
 
 - src: gantsign.golang
-  version: 2.3.0
+  version: 2.3.2
 
 - src: lecorguille.singularity
   version: 1.2.0
