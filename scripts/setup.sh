@@ -8,11 +8,11 @@
 #                         or: curl -sL git.io/deepops | bash -s -- 19.07
 
 # Configuration
-ANSIBLE_VERSION="${ANSIBLE_VERSION:-2.9.5}"     # Ansible version to install
+ANSIBLE_VERSION="${ANSIBLE_VERSION:-2.10.8}"     # Ansible version to install
 ANSIBLE_OK="${ANSIBLE_OK:-2.7.8}"               # Oldest allowed Ansible version
 CONFIG_DIR="${CONFIG_DIR:-./config}"            # Default configuration directory location
 DEEPOPS_TAG="${1:-master}"                      # DeepOps branch to set up
-JINJA2_VERSION="${JINJA2_VERSION:-2.11.1}"      # Jinja2 required version
+JINJA2_VERSION="${JINJA2_VERSION:-3.0.0}"      # Jinja2 required version
 PIP="${PIP:-pip3}"                              # Pip binary to use
 PYTHON_BIN="${PYTHON_BIN:-/usr/bin/python3}"    # Python3 path
 VENV_DIR="${VENV_DIR:-/opt/deepops/env}"        # Path to python virtual environment to create
