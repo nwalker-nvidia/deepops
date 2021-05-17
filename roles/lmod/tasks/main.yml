@@ -1,6 +1,6 @@
 #
 # ansible role to install lmod:
-#
+# #UPDATE .. Add ubuntu 20.04 and check lua versions
 ---
 - name: RedHat | add epel repo
   become: yes
