@@ -31,13 +31,13 @@ k8s_gpu_mig_strategy: "mixed"
 
 # Pin the version of kubespray dashboard https://github.com/kubernetes/dashboard/releases/tag/v2.0.3
 dashboard_enabled: true
-dashboard_image_tag: "v2.0.3"
+dashboard_image_tag: "v2.2.0"
 dashboard_image_repo: "kubernetesui/dashboard"
-dashboard_metrics_scrape_tagr: "v1.0.4"
+dashboard_metrics_scrape_tagr: "v1.0.6"
 dashboard_metrics_scraper_repo: "kubernetesui/metrics-scraper"
 
 # kubespray v2.13.1 deploys helm v3.1.2
-helm_version: "v3.4.1"
+helm_version: "v3.5.4"
 
 # Ensure hosts file generation only runs across k8s cluster
 hosts_add_ansible_managed_hosts_groups: ["k8s-cluster"]
