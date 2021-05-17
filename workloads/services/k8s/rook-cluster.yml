@@ -7,7 +7,7 @@ metadata:
 spec:
   cephVersion:
     # For the latest ceph images, see https://hub.docker.com/r/ceph/ceph/tags
-    image: ceph/ceph:v14.2
+    image: ceph/ceph:v16.2
   dataDirHostPath: /var/lib/rook
   mon:
     count: 3
@@ -69,7 +69,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
       - name: rook-ceph-tools
-        image: rook/ceph:v1.2.7
+        image: rook/ceph:v1.6.2
         command: ["/tini"]
         args: ["-g", "--", "/usr/local/bin/toolbox.sh"]
         imagePullPolicy: IfNotPresent
