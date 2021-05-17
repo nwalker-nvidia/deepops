@@ -81,7 +81,7 @@
 
 #Install MPI Operator:latest
 
-- name: Install Kubeflow MPI-Operator version v1alpha2
+- name: Install Kubeflow MPI-Operator version v1
   k8s:
     state: present
     definition: "{{ lookup('url', 'https://raw.githubusercontent.com/kubeflow/mpi-operator/master/deploy/v1/mpi-operator.yaml', split_lines=False) }}"
