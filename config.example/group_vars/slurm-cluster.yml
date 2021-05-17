@@ -3,7 +3,7 @@
 ################################################################################
 # Slurm job scheduler configuration
 # Playbook: slurm, slurm-cluster, slurm-perf, slurm-perf-cluster, slurm-validation
-slurm_version: 20.11.3
+slurm_version: 20.11.8
 slurm_install_prefix: /usr/local
 pmix_install_prefix: /opt/deepops/pmix
 hwloc_install_prefix: /opt/deepops/hwloc
@@ -66,11 +66,11 @@ nfs_mounts:
   - mountpoint: /home
     server: '{{ groups["slurm-master"][0] }}'
     path: /home
-    options: async,vers=3
+    options: async,vers=4.1
   - mountpoint: /sw
     server: '{{ groups["slurm-master"][0] }}'
     path: /sw
-    options: async,vers=3
+    options: async,vers=4.1
 
 # Flags for enable/disable of NFS deployment
 #  - Set up an NFS server on nfs-server?
@@ -105,8 +105,8 @@ sm_module_path: "{{ sm_module_root }}/all"
 spack_install_dir: "{{ sm_prefix }}/spack"
 spack_build_packages: false
 spack_default_packages:
-- "cuda@10.2.89"
-- "openmpi@3.1.6 +cuda +pmi schedulers=auto"
+- "cuda@11.3.0"
+- "openmpi@4.1.1 +cuda +pmi schedulers=auto"
 
 # Which host should we run installs on for software going into the NFS share?
 sm_install_host: "slurm-master[0]"
@@ -136,7 +136,7 @@ hpcsdk_install_in_path: false
 # this can help you get started.
 ################################################################################
 slurm_cluster_install_openmpi: false
-openmpi_version: 4.0.4
+openmpi_version: 4.1.1
 openmpi_install_prefix: "/usr/local"
 openmpi_configure: "./configure --prefix={{ openmpi_install_prefix }} --disable-dependency-tracking --disable-getpwuid --with-pmix={{ pmix_install_prefix }} --with-hwloc={{ hwloc_install_prefix }} --with-pmi={{ slurm_install_prefix }} --with-slurm={{ slurm_install_prefix }} --with-libevent=/usr"
 
@@ -165,7 +165,7 @@ allow_user_set_gpu_clocks: no
 ################################################################################
 slurm_install_enroot: true
 slurm_install_pyxis: true
-slurm_pyxis_version: 0.8.1
+slurm_pyxis_version: 0.10.0
 
 ################################################################################
 # Node Health Check                                                            #
