@@ -1,4 +1,5 @@
 # Vars needed to install nfs-client-provisioner
+# #UPDATE why not use artifact hub original location ?
 k8s_nfs_server: "127.0.0.1"
 k8s_nfs_export_path: "/export/deepops_nfs"
 k8s_nfs_default_sc: "true"
