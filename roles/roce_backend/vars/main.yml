@@ -32,17 +32,17 @@ dev_id: "101c"
 num_vf: 8
 
 #Mellanox OFED parameters
-mofed_version: "4.7-3.2.9.0"
-mofed_site_place: "MLNX_OFED-4.7-3.2.9.0"
-mofed_file_name: "MLNX_OFED_LINUX-4.7-3.2.9.0-ubuntu18.04-x86_64.iso"
+mofed_version: "5.3-1.0.0.1"
+mofed_site_place: "MLNX_OFED-5.3-1.0.0.1"
+mofed_file_name: "MLNX_OFED_LINUX-5.3-1.0.0.1-ubuntu18.04-x86_64.iso"
 
 # before K8s 1.16
-multus_ds: "https://raw.githubusercontent.com/intel/multus-cni/master/images/multus-daemonset-pre-1.16.yml"
-sriov_dp_ds: "https://raw.githubusercontent.com/intel/sriov-network-device-plugin/master/deployments/k8s-v1.10-v1.15/sriovdp-daemonset.yaml"
-sriov_cni_ds: "https://raw.githubusercontent.com/intel/sriov-cni/master/images/k8s-v1.10-v1.15/sriov-cni-daemonset.yaml"
+# multus_ds: "https://raw.githubusercontent.com/intel/multus-cni/master/images/multus-daemonset-pre-1.16.yml"
+# sriov_dp_ds: "https://raw.githubusercontent.com/intel/sriov-network-device-plugin/master/deployments/k8s-v1.10-v1.15/sriovdp-daemonset.yaml"
+# sriov_cni_ds: "https://raw.githubusercontent.com/intel/sriov-cni/master/images/k8s-v1.10-v1.15/sriov-cni-daemonset.yaml"
 
 # from K8s 1.16
-# multus_ds: "https://raw.githubusercontent.com/intel/multus-cni/master/images/multus-daemonset.yml"
-# sriov_dp_ds: "https://raw.githubusercontent.com/intel/sriov-network-device-plugin/master/deployments/k8s-v1.16/sriovdp-daemonset.yaml"
-# sriov_cni_ds: "https://raw.githubusercontent.com/intel/sriov-cni/master/images/k8s-v1.16/sriov-cni-daemonset.yaml"
+multus_ds: "https://raw.githubusercontent.com/intel/multus-cni/master/images/multus-daemonset.yml"
+sriov_dp_ds: "https://raw.githubusercontent.com/intel/sriov-network-device-plugin/master/deployments/k8s-v1.16/sriovdp-daemonset.yaml"
+sriov_cni_ds: "https://raw.githubusercontent.com/intel/sriov-cni/master/images/k8s-v1.16/sriov-cni-daemonset.yaml"
 
