@@ -1,5 +1,5 @@
 # https://ngc.nvidia.com/catalog/containers/nvidia:pytorch
-FROM nvcr.io/nvidia/pytorch:20.12-py3
+FROM nvcr.io/nvidia/pytorch:21.05-py3
 
 # Set to noninteractive for apt-get installs
 ARG DEBIAN_FRONTEND=noninteractive
@@ -29,7 +29,7 @@ RUN source "$NVM_DIR/nvm.sh" && \
 
 # Install graphviz for clean graph/node/edge rendering
 RUN source "$NVM_DIR/nvm.sh" && \
-    conda install -c conda-forge python-graphviz=0.13.2 graphviz=2.42.3 && conda clean -yac *
+    conda install -c conda-forge python-graphviz=0.16 graphviz=2.47.1 && conda clean -yac *
 
 # Get latest pip updates
 RUN  pip install --upgrade pip
