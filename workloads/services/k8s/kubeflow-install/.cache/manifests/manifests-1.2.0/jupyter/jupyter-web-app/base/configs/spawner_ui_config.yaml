@@ -22,7 +22,7 @@ spawnerFormDefaults:
     # The list of available standard container Images
     options:
       - nvcr.io/nvidia/ds_deployment_demo:20.06
-      - nvcr.io/nvidia/dali-pytorch:latest
+      - nvcr.io/nvidia/pytorch:21.05-py3
       - nvcr.io/nvidia/nemo_asr_app_img:20.07
       - nvcr.io/nvidia/nemo_bert_text_classification:20.07
       # TODO: Fix when the NB_PREFIX is set correctly - nvcr.io/nvidia/rapids_ml_workshop:20.11
@@ -57,6 +57,7 @@ spawnerFormDefaults:
         value: '10Gi'
       mountPath:
         # The Path that the Workspace Volume will be mounted
+        # #UPDATE Check why this particular name for the mount point
         value: /home/jovyan
       accessModes:
         # The Access Mode of the Workspace Volume
@@ -114,8 +115,6 @@ spawnerFormDefaults:
       vendors:
         - limitsKey: "nvidia.com/gpu"
           uiName: "NVIDIA"
-        - limitsKey: "amd.com/gpu"
-          uiName: "AMD"
       # Values: "" or a `limits-key` from the vendors list
       vendor: "nvidia.com/gpu"
     readOnly: false
