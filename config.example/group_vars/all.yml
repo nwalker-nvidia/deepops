@@ -30,6 +30,7 @@
 
 # NTP configuration
 # Playbook: chrony-client
+chrony_install: yes
 chrony_service_state: "started"
 chrony_service_enabled: "yes"
 chrony_timezone: "Etc/UTC"
@@ -39,14 +40,12 @@ chrony_config_server:
   - 2.pool.ntp.org
   - 3.pool.ntp.org
 
+# Set hostname based on inventory file
+deepops_set_hostname: true
 
 ################################################################################
 # SOFTWARE                                                                     #
 ################################################################################
-# Lmod modules
-# Playbook: lmod
-#lmod_modulepath: /shared/modules/all
-
 # Extra software to install or remove
 # Playbook: software
 #software_extra_packages:
@@ -88,6 +87,8 @@ chrony_config_server:
 #    path: /export/shared
 #    options: async,vers=3
 
+# Extra Packages for Enterprise Linux (RHEL/CentOS)
+epel_package: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm"
 
 ################################################################################
 # USERS                                                                        #
@@ -108,11 +109,23 @@ users:
 # NVIDIA                                                                       #
 ################################################################################
 # NVIDIA GPU configuration
+# Playbook: nvidia-cuda
+cuda_version: cuda-toolkit-11-0
+
+# DGX-specific vars may be used to target specific models,
+# because available versions for DGX may differ from the generic repo
+#cuda_dgx_1_version: "{{ cuda_version }}"
+#cuda_dgx_2_version: "{{ cuda_version }}"
+#cuda_dgx_a100_version: "{{ cuda_version }}"
+
 # Playbook: nvidia-set-gpu-clocks
 # Resets the Gpu clocks to the default values. (see the `--reset-gpu-clocks` flag in nvidia-smi for more)
 gpu_clock_reset: no
 # Specifies <minGpuClock,maxGpuClock> clocks as a pair (e.g. 1500,1500) that defines the range of desired locked GPU clock speed in MHz. Setting this will supercede application clocks and take effect regardless if an app is running. Input can also be a singular desired clock value. (see the `--lock-gpu-clocks` flag in nvidia-smi for more)
 gpu_clock_lock: "1507,1507"
+
+# Debugging var: force install NVIDIA driver even if GPU not detected
+nvidia_driver_force_install: false
 
 
 ################################################################################
@@ -120,27 +133,47 @@ gpu_clock_lock: "1507,1507"
 ################################################################################
 # Docker configuration
 # Playbook: docker, nvidia-docker, k8s-cluster
-# 
+#
 # For supported Docker versions, see: kubespray/roles/container-engine/docker/vars/*
-docker_version: '18.09'
+docker_install: yes
+docker_version: '19.03'
 docker_dns_servers_strict: no
 docker_storage_options: -s overlay2
 #docker_options: "--bip=192.168.99.1/24"
+# Enable docker iptables
+# If this isn't set, containers won't have access to the outside net
+# See https://github.com/kubernetes-sigs/kubespray/issues/2002
+docker_iptables_enabled: true
+# Docker daemon logins
+#   Note: example only! you should put these in an Ansible Vault file for security!
+#
+#docker_login_registries:
+#- registry: docker.io
+#  username: myuser
+#  password: mypassword
+#  email: docker@docker.io
+#- registry: nvcr.io
+#  username: '$oauthtoken'
+#  password: mypassword
 
 # Enroot configuration
-# Playbook: slurm-perf, slurm-perf-cluster
-enroot_runtime_path: '/tmp/enroot-runtime-$(id -u)'
-enroot_cache_path: '/tmp/enroot-cache-$(id -u)'
-enroot_data_path: '/tmp/enroot-data-$(id -u)'
+# Playbook: slurm, slurm-cluster
+#
+# See: https://github.com/NVIDIA/pyxis/wiki/Setup#enroot-configuration-example
+enroot_runtime_path: '/run/enroot/user-$(id -u)'
+enroot_cache_path: '/var/lib/enroot-cache/group-$(id -g)'
+enroot_data_path: '/tmp/enroot-data/user-$(id -u)'
 enroot_config: |
   ENROOT_CONFIG_PATH ${HOME}/.config/enroot
   ENROOT_SQUASH_OPTIONS -noI -noD -noF -noX -no-duplicates
   ENROOT_MOUNT_HOME y
   ENROOT_RESTRICT_DEV y
+  ENROOT_ROOTFS_WRITABLE y
   ENROOT_RUNTIME_PATH {{ enroot_runtime_path }}
   ENROOT_CACHE_PATH {{ enroot_cache_path }}
   ENROOT_DATA_PATH {{ enroot_data_path }}
-enroot_environ_config_files:
+enroot_environ_config_files: []
+enroot_environ_config_files_dgx:
   - filename: 50-mellanox.env
     content: |
       MELLANOX_VISIBLE_DEVICES=all
@@ -158,7 +191,6 @@ bind_paths: []
   #- /mnt/shared
 golang_install_dir: '/opt/go/{{ golang_version }}'
 golang_gopath: /opt/go/packages
-
 
 ################################################################################
 # AUTH                                                                         #
@@ -201,7 +233,7 @@ maas_adminusers:
 maas_dns_domain: 'deepops.local'
 maas_region_controller: '192.168.1.1'
 maas_region_controller_url: 'http://{{ maas_region_controller }}:5240/MAAS'
-maas_repo: 'ppa:maas/stable'
+maas_repo: 'ppa:maas/2.8'
 
 # Defines if maas user should generate ssh keys
 # Usable for remote KVM/libvirt power actions
@@ -211,6 +243,10 @@ maas_single_node_install: true
 
 maas_kvm: false
 
+################################################################################
+# NVIDIA Datacenter GPU Manager                                                #
+################################################################################
+install_dcgm: true
 
 ################################################################################
 # Misc.                                                                        #
@@ -226,3 +262,22 @@ deepops_dir: /opt/deepops
 # Directory for python virtualenv
 # Roles: K8s GPU operator, GPU plugin, OpenShift/K8s
 deepops_venv: '{{ deepops_dir }}/venv'
+
+# OpenMPI
+# Playbook: openmpi
+openmpi_version: 4.0.3
+
+# Disable cloud-init
+deepops_disable_cloud_init: true
+
+################################################################################
+# Container registry                                                           #
+################################################################################
+standalone_container_registry_cache_enable: true
+standalone_container_registry_port: "5000"
+
+# To configure some set of hosts as insecure registries, list them here.
+# Slurm and K8s cluster playbooks will automatically use the master nodes for
+# these if not specified.
+#docker_insecure_registries: ["<host>:<port>"]
+#docker_registry_mirrors: ["http://<host>:<port>"]

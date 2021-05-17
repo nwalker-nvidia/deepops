@@ -1,42 +1,13 @@
 ---
-- name: gather os specific variables
-  include_vars: "{{ item }}"
-  with_first_found:
-    - files:
-      - "{{ ansible_distribution|lower }}.yml"
-      - "{{ ansible_os_family|lower }}.yml"
-      paths:
-      - ../vars
-      skip: true
-  tags:
-    - always
-
-- name: add epel repo
-  yum_repository:
-    name: epel
-    description: EPEL YUM repo
-    baseurl: "{{ epel_baseurl }}"
-    gpgkey: "{{ epel_gpgkey }}"
-  when: ansible_os_family == "RedHat"
-
-- include: munge.yml
+- include: setup-role.yml
 
 - include: build.yml
   tags: build
+  when: slurm_workflow_build
 
-- name: create slurm user home
-  file:
-   path: "{{ slurm_user_home }}"
-   recurse: yes
-   state: directory
+- include: service-files.yml
 
-- name: create slurm user
-  user:
-    name: slurm
-    state: present
-    system: yes
-    home: "{{ slurm_user_home }}"
-    uid: "{{ slurm_user_uid }}"
+- include: setup-user.yml
 
 - include: controller.yml
   when: is_controller
@@ -44,9 +15,18 @@
 - include: compute.yml
   when: is_compute
 
+- include: misc-node.yml
+  when: (not is_compute) and (not is_controller)
+
 - include: shmfix.yml
   when: is_compute and slurm_fix_shm
 
-# unplug the drain - sometimes nodes get stuck
-# sudo scontrol update node=XXX state=idle
-# where XXX are the nodes that have changed and are marked as *down*
+- include: logging.yml
+  tags:
+  - rsyslog
+  - logging
+
+- include: undrain.yml
+  when: is_compute
+
+- include: build-cleanup.yml

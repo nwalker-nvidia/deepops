@@ -16,7 +16,7 @@ cd "${ROOT_DIR}" || exit 1
 DEEPOPS_OFFLINE="${DEEPOPS_OFFLINE:-0}"
 ansible_extra_args=""
 if [ "${DEEPOPS_OFFLINE}" -ne 0 ]; then
-	ansible_extra_args="-e "@${VIRT_DIR}/config/offline_repo_vars.yml" --skip-tags configure_docker_repo -vv"
+	ansible_extra_args="-e "@${VIRT_DIR}/config/airgap/offline_repo_vars.yml" --skip-tags configure_docker_repo -vv"
 fi
 
 # Use ansible install in virtualenv
@@ -34,16 +34,10 @@ ansible-playbook \
 	-e "@${VIRT_DIR}/vars_files/virt_slurm.yml" ${ansible_extra_args} \
 	"${ROOT_DIR}/playbooks/slurm-cluster.yml"
 
-# Configure NFS server for /shared
+# Un-drain nodes
 ansible-playbook \
 	-i "${VIRT_DIR}/config/inventory" \
-	-l slurm-master \
+	-l slurm-cluster \
 	-e "@${VIRT_DIR}/vars_files/virt_slurm.yml" ${ansible_extra_args} \
-	"${ROOT_DIR}/playbooks/nfs-server.yml"
-
-# Configure NFS clients for /shared
-ansible-playbook \
-	-i "${VIRT_DIR}/config/inventory" \
-	-l slurm-node \
-	-e "@${VIRT_DIR}/vars_files/virt_slurm.yml" ${ansible_extra_args} \
-	"${ROOT_DIR}/playbooks/nfs-client.yml"
+	--tags undrain \
+	"${ROOT_DIR}/playbooks/slurm-cluster/slurm.yml"

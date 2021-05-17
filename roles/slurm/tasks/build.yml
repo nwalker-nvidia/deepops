@@ -1,17 +1,59 @@
 ---
+###########################################
+# Install dependencies
+###########################################
+
+- include: setup-role.yml
+
+- name: configure alternative library path
+  template:
+    src: etc/ld.so.conf.d/slurm.conf.j2
+    dest: /etc/ld.so.conf.d/slurm.conf
+    mode: 0644
+  register: updated_slurm_ld
+
+- name: update ld cache
+  command: ldconfig
+  when: updated_slurm_ld.changed
+
+- include: munge.yml
+
+- include: hwloc.yml
+  tags: hwloc
+  when: slurm_include_hwloc
+
+- include: pmix.yml
+  tags: pmix
+  when: slurm_include_pmix
+
+###########################################
+# Build Slurm
+###########################################
 - name: default to building slurm
   set_fact:
     slurm_build: yes
+    slurm_upgrade: no
+    slurm_downgrade: no
 
 - name: check installed slurm version
-  shell: /usr/bin/sinfo --version | awk '{print $2}'
-  register: sinfo_version
+  shell: "{{ slurm_install_prefix }}/sbin/slurmd --version | awk '{print $2}'"
+  register: slurmd_reported_version
   ignore_errors: yes
 
 - name: don't build slurm if it's already installed, unless forced
   set_fact:
     slurm_build: no
-  when: sinfo_version.stdout == slurm_version and not slurm_force_rebuild
+  when: slurmd_reported_version.stdout == slurm_version and not slurm_force_rebuild
+
+- name: upgrade?
+  set_fact:
+    slurm_upgrade: yes
+  when: slurmd_reported_version.stdout and slurmd_reported_version.stdout is version(slurm_version, '<')
+
+- name: downgrade?
+  set_fact:
+    slurm_downgrade: yes
+  when: slurmd_reported_version.stdout and slurmd_reported_version.stdout is version(slurm_version, '>')
 
 - name: going to rebuild slurm?
   debug:
@@ -20,6 +62,8 @@
 - name: install build dependencies
   apt:
     name: "{{ item }}"
+    state: present
+    update_cache: yes
   with_items: "{{ slurm_build_deps }}"
   when: ansible_distribution == 'Ubuntu'
 
@@ -27,8 +71,17 @@
   yum:
     name: "{{ item }}"
     state: present
+    update_cache: yes
   with_items: "{{ slurm_build_deps }}"
-  when: ansible_os_family == 'RedHat'
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == "7"
+
+- name: install build dependencies
+  dnf:
+    name: "{{ item }}"
+    state: present
+    enablerepo: "powertools"
+  with_items: "{{ slurm_build_deps }}"
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == "8"
 
 - name: remove slurm packages
   apt:
@@ -46,7 +99,7 @@
 - name: remove slurm packages
   yum:
     name: "{{ item }}"
-    state: present
+    state: absent
   with_items:
     - slurm
   when: ansible_os_family == 'RedHat'
@@ -84,7 +137,7 @@
   when: slurm_build
 
 - name: configure
-  command: "./configure --prefix={{ slurm_install_prefix }} --sysconfdir={{ slurm_config_dir }} --enable-pam --with-pam_dir={{ slurm_pam_lib_dir }} --without-shared-libslurm"
+  command: "{{ slurm_configure }}"
   args:
     chdir: "{{ slurm_build_dir }}"
   when: slurm_build
@@ -137,21 +190,15 @@
     - restart slurmdbd
     - restart slurmctld
 
-- name: copy service files
-  copy:
-    src: "{{ slurm_build_dir }}/etc/{{ item }}"
-    dest: "/etc/systemd/system/{{ item }}"
-    remote_src: yes
-  with_items:
-    - slurmctld.service
-    - slurmdbd.service
-  when: is_controller and slurm_build
+- name: fix library dir permissions
+  file:
+    path: "{{ slurm_install_prefix }}/lib/slurm"
+    state: directory
+    mode: 0775
 
-- name: copy service files
-  copy:
-    src: "{{ slurm_build_dir }}/etc/{{ item }}"
-    dest: "/etc/systemd/system/{{ item }}"
-    remote_src: yes
-  with_items:
-    - slurmd.service
-  when: is_compute and slurm_build
+- name: fix deepops dir permissions
+  file:
+    path: "{{ deepops_dir }}"
+    state: directory
+    mode: 0755
+    recurse: yes

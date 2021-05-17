@@ -1,9 +1,0 @@
----
-- include: docker.yml
-
-- hosts: all
-  become: yes
-  tasks:
-    - name: configure grafana
-      include_role:
-        name: grafana
