@@ -1,9 +1,12 @@
-[submodule "kubespray"]
-	path = submodules/kubespray
-	url = https://github.com/kubernetes-incubator/kubespray.git
-[submodule "packer-maas"]
-	path = submodules/packer-maas
-	url = https://github.com/DeepOps/packer-maas.git
-[submodule "charts"]
+[submodule "submodules/charts"]
 	path = submodules/charts
-	url = https://github.com/helm/charts.git
+	url = https://github.com/helm/charts
+	branch = master
+[submodule "submodules/kubespray"]
+	path = submodules/kubespray
+	url = https://github.com/kubernetes-sigs/kubespray
+	branch = master
+[submodule "submodules/packer-maas"]
+	path = submodules/packer-maas
+	url = https://github.com/DeepOps/packer-maas
+	branch = master
