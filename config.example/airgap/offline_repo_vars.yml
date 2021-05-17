@@ -104,7 +104,7 @@ nvidia_docker_wrapper_url: "{{ deepops_misc_mirror }}/nvidia-docker"
 # - These variables appear in Ansible playbooks from Kubespray
 ###############################################################################
 
-cni_download_url: "{{ deepops_misc_mirror }}/cni-plugins-amd64-v0.6.0.tgz"
+cni_download_url: "{{ deepops_misc_mirror }}/cni-plugins-linux-amd64-v0.9.1.tgz"
 hyperkube_download_url: "{{ deepops_misc_mirror }}/hyperkube"
 kubeadm_download_url: "{{ deepops_misc_mirror }}/kubeadm"
 
