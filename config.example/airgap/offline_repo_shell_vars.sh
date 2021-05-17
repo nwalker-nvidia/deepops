@@ -32,7 +32,7 @@ fi
 
 # Set env vars used by DeepOps deployment scripts
 export DOCKER_COMPOSE_URL="${DEEPOPS_MISC_MIRROR}/docker-compose"
-export HELM_INSTALL_SCRIPT_URL="${DEEPOPS_MISC_MIRROR}/helm-v2.11.0-linux-amd64.tar.gz"
+export HELM_INSTALL_SCRIPT_URL="${DEEPOPS_MISC_MIRROR}/helm-v3.5.4-linux-amd64.tar.gz"
 export KSONNET_URL="${DEEPOPS_MISC_MIRROR}/ks_0.13.1_linux_amd64.tar.gz"
 export KUBECTL_BINARY_URL="${DEEPOPS_MISC_MIRROR}/kubectl"
 
