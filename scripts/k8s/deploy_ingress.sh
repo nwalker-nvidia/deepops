@@ -6,7 +6,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 ROOT_DIR="${SCRIPT_DIR}/../.."
 
 HELM_CHARTS_REPO_INGRESS="${HELM_CHARTS_REPO_INGRESS:-https://kubernetes.github.io/ingress-nginx}"
-HELM_INGRESS_CHART_VERSION="${HELM_INGRESS_CHART_VERSION:-3.5.1}"
+HELM_INGRESS_CHART_VERSION="${HELM_INGRESS_CHART_VERSION:-3.30.0}"
 # HELM_INGRESS_CONFIG, defaults below based on presence of metallb
 
 ${SCRIPT_DIR}/install_helm.sh
