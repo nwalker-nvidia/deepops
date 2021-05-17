@@ -1,4 +1,5 @@
 ---
+# #UPDATE This requires heavy updating, also the DeepOps repo has to be managed somehow .. slurm release is quite old and not aligned.
 offline_cache_dir: "/tmp/deepops"
 build_tar_file: true
 tar_file_path: "/tmp/deepops-archive.tar"
