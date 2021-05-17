@@ -1,5 +1,6 @@
-FROM golang:1.10.2
+FROM golang:1.16.4
 
+# COMMIT_HASH below not updated
 ENV COMMIT_HASH 03425a0d6ae36852d5ea7b446571bbcd3829d717
 ENV CUSTOM_FORK_AUTHOR deepops
 RUN apt-get update
@@ -16,7 +17,7 @@ RUN ls -al ./vendor
 WORKDIR /go/src
 RUN CGO_ENABLED=0 GOOS=linux go build -o /bin/pixiecore -ldflags "-w -s -v -extldflags -static" go.universe.tf/netboot/cmd/pixiecore
 
-FROM alpine:3.6
+FROM alpine:3.13
 MAINTAINER Douglas Holt <dholt@nvidia.com>
 
 RUN apk add --no-cache ca-certificates
