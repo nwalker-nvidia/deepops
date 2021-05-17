@@ -1,5 +1,5 @@
 # https://ngc.nvidia.com/catalog/containers/nvidia:tensorflow
-FROM nvcr.io/nvidia/tensorflow:20.12-tf1-py3
+FROM nvcr.io/nvidia/tensorflow:21.05-tf2-py3
 
 # Install some extra packages to ease development
 RUN apt-get update && \
@@ -14,7 +14,7 @@ RUN  source "$NVM_DIR/nvm.sh" && \
 # To enable the built-in Node environment we must source the nvm.sh script.
 # Install the NVIDIA Jupyter Dashboard
 RUN  source "$NVM_DIR/nvm.sh" && \
-     pip install jupyterlab-nvdashboard==0.4.0 && \
+     pip install jupyterlab-nvdashboard==0.5.0 && \
      jupyter labextension install jupyterlab-nvdashboard
 
 # Install ipyvolume for clean HTML5 visualizations
@@ -25,7 +25,7 @@ RUN source "$NVM_DIR/nvm.sh" && \
 # Install graphviz for clean graph/node/edge rendering
 RUN source "$NVM_DIR/nvm.sh" && \
     apt-get update && \
-    apt-get install -s graphviz=2.42.2-3build2 && \
+    apt-get install -s graphviz && \
     pip install graphviz==0.16 && \
     rm -rf /var/lib/apt/*
 
