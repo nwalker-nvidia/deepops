@@ -1,4 +1,5 @@
 ---
+# #UPDATE Look into moving to NGC images + script or args to achieve TF synthetic training or NCCL bw test.
 # Playbook designed to run a NCCL test across all nodes in a cluster of DGX-1s
 - hosts: slurm-master[0]
   vars:
