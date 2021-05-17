@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DOCKER_COMPOSE_URL="${DOCKER_COMPOSE_URL:-https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)}"
+DOCKER_COMPOSE_URL="${DOCKER_COMPOSE_URL:-https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)}"
 
 type docker >/dev/null 2>&1
 if [ $? -ne 0 ] ; then
