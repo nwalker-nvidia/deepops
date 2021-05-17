@@ -2,7 +2,7 @@
 # playbook for create NetworkAttachmentDefinition for Kubernetes Mellanox RDMA Device plugin in SRIOV mode
 # #
 # # Author: Vitaliy Razinkov <vitaliyra@mellanox.com>
-# #
+# # #UPDATE What does the CNI version refer to ?
 - name: Create netattdef
   vars:
     config_json: |
