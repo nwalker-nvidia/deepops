@@ -1,6 +1,7 @@
 # See the github repo for more details:  https://github.com/helm/charts/blob/master/stable/dask/values.yaml
 # For best results, use the same docker image for workers and schedulers
 
+# #UPDATE requires move to NGC RAPIDS image or refresh of container below to latest rapids + CUDA 11.3 + ubuntu 20.04
 # Specify the resources used for each worker as well as the number of workers.
 worker:
   image:
