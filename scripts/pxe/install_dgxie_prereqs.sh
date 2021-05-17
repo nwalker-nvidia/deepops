@@ -18,7 +18,7 @@ fi
 # install docker-compose
 type docker-compose >/dev/null 2>&1
 if [ $? -ne 0 ] ; then
-    sudo curl -L https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+    sudo curl -L https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
     docker-compose --version
 fi
@@ -35,8 +35,8 @@ fi
 # configure ISO mount
 grep DGXServer /etc/fstab
 if [ $? -ne 0 ] ; then
-    mkdir -p /mnt/3.1.2
-    echo "${HOME}/DGXServer-3.1.2.170902_f8777e.iso    /mnt/3.1.2  iso9660  loop    0   0" | sudo tee -a /etc/fstab
+    mkdir -p /mnt/baseos502
+    echo "${HOME}/DGXOS-5.0.2-2021-02-04-09-33-25.iso    /mnt/baseos502  iso9660  loop    0   0" | sudo tee -a /etc/fstab
 fi
 
 # remove SUDO password requirement
