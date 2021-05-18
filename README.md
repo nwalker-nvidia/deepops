@@ -1,5 +1,10 @@
-DeepOps
+DeepOps Experimental Fork
 ===
+
+## Special Notes
+- add pre-script with pwd less Sudo on mgm node etc.
+- inc ansible_interfaces in inventory file
+
 
 GPU infrastructure and automation tools
 
