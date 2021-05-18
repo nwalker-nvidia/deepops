@@ -7,14 +7,15 @@
 ######
 # ALL NODES
 # NOTE: Use existing hostnames here, DeepOps will configure server hostnames to match these values
+# Do include "ansible_interfaces"
 ######
 [all]
-#mgmt01     ansible_host=10.0.0.1
-#mgmt02     ansible_host=10.0.0.2
-#mgmt03     ansible_host=10.0.0.3
-#login01    ansible_host=10.0.1.1
-#gpu01      ansible_host=10.0.2.1
-#gpu02      ansible_host=10.0.2.2
+#mgmt01     ansible_interfaces=eth0 ansible_host=10.0.0.1
+#mgmt02     ansible_interfaces=eth0 ansible_host=10.0.0.2
+#mgmt03     ansible_interfaces=eth0 ansible_host=10.0.0.3
+#login01    ansible_interfaces=eth0 ansible_host=10.0.1.1
+#gpu01      ansible_interfaces=eth0 ansible_host=10.0.2.1
+#gpu02      ansible_interfaces=eth0 ansible_host=10.0.2.2
 
 ######
 # KUBERNETES
@@ -34,6 +35,9 @@
 [kube-node]
 #gpu01
 #gpu02
+
+[kube_node:children]
+kube-node
 
 [k8s-cluster:children]
 kube-master
