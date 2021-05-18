@@ -31,10 +31,16 @@
 #mgmt02
 #mgmt03
 
+[calico_rr]
+#mgmt01
+
 # Also add mgmt/master nodes here if they will run non-control plane jobs
 [kube-node]
 #gpu01
 #gpu02
+
+[kube_control_plane:children]
+kube-master
 
 [kube_node:children]
 kube-node
@@ -42,6 +48,9 @@ kube-node
 [k8s-cluster:children]
 kube-master
 kube-node
+
+[k8s_cluster:children]
+k8s-cluster
 
 ######
 # SLURM
