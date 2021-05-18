@@ -10,7 +10,7 @@ container_registry_values_template: "values.yaml"
 container_registry_values_path: "/tmp/container-registry.yaml"
 
 container_registry_namespace: "deepops-docker"
-container_registry_version: 2.7.1
+container_registry_version: 1.10.1
 container_registry_hostname: registry.local
 container_registry_ingress_enabled: false
 container_registry_ingress_size: 4096m
