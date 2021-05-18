@@ -8,7 +8,7 @@
 #                         or: curl -sL git.io/deepops | bash -s -- 19.07
 
 # Configuration
-ANSIBLE_VERSION="${ANSIBLE_VERSION:-3.4.0}"     # Ansible version to install
+ANSIBLE_VERSION="${ANSIBLE_VERSION:-2.9.21}"     # Ansible version to install
 ANSIBLE_OK="${ANSIBLE_OK:-2.7.8}"               # Oldest allowed Ansible version
 CONFIG_DIR="${CONFIG_DIR:-./config}"            # Default configuration directory location
 DEEPOPS_TAG="${1:-master}"                      # DeepOps branch to set up
