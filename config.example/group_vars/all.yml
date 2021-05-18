@@ -218,6 +218,7 @@ golang_gopath: /opt/go/packages
 #collectd_python_module_path: "/usr/lib/collectd/dcgm"
 #collectd_python_modules: []
 #collectd_config_dir: "/etc/collectd/collectd.conf.d"
+# #UPDATE Below doesn't seem to work if turned to true .. perhaps in hybrid k8s cluster ... CHECK
 #with_dcgm_collectd: false
 
 
@@ -246,6 +247,7 @@ maas_kvm: false
 ################################################################################
 # NVIDIA Datacenter GPU Manager                                                #
 ################################################################################
+# #UPDATE Below doesn't seem to work if turned to true .. perhaps in hybrid k8s cluster ... CHECK
 install_dcgm: true
 
 ################################################################################
