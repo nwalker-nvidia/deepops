@@ -117,8 +117,8 @@ function setup_prom_monitoring() {
     # Get IP information of master and ingress
     get_ips
 
-    if kubectl describe service -l "app.kubernetes.io/name=${ingress_name},app.kubernetes.io/component=controller" | grep 'LoadBalancer Ingress' >/dev/null 2>&1; then
-        lb_ip="$(kubectl describe service -l "app.kubernetes.io/name=${ingress_name},app.kubernetes.io/component=controller" | grep 'LoadBalancer Ingress' | awk '{print $3}')"
+    if kubectl -n deepops-ingress describe service -l "app.kubernetes.io/name=${ingress_name},app.kubernetes.io/component=controller" | grep 'LoadBalancer Ingress' >/dev/null 2>&1; then
+        lb_ip="$(kubectl -n deepops-ingress describe service -l "app.kubernetes.io/name=${ingress_name},app.kubernetes.io/component=controller" | grep 'LoadBalancer Ingress' | awk '{print $3}')"
         ingress_ip_string="$(echo ${lb_ip} | tr '.' '-').nip.io"
         echo "Using load balancer url: ${ingress_ip_string}"
     fi
